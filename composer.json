@@ -1,0 +1,28 @@
+{
+    "name": "pstrennepohl/php-api-sicredi",
+    "description": "Biblioteca para integração com a API Sicredi Geração de QR Code PIX + Geração de Boletos",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Paulo Trennepohl",
+            "email": "paulo@inovativaweb.com.br"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "chillerlan/php-qrcode": "^5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PSTrennepohl\\Sicredi\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "support": {
+        "source": "https://github.com/pstrennepohl/php-api-sicredi",
+        "issues": "https://github.com/pstrennepohl/php-api-sicredi/issues"
+    },
+    "homepage": "https://github.com/pstrennepohl/php-api-sicredi"
+}
