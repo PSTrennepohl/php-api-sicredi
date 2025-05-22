@@ -86,4 +86,13 @@ Para uma lista completa de opções na geração de boleto execute:
   echo $sicredi->DadosBoleto->getVariaveis();
 ?>
 
+
+Para uma lista completa de opções execute:
+<?php
+  require_once "./autoload.php";
+  use PSTrennepohl\Sicredi\SicrediAPI;
+  $sicredi = new SicrediAPI($agencia,$cedente,$posto,$token,$api_key);
+  echo $sicredi->DadosBoleto->getVariaveis();
+?>
+
 Qualquer dúvida consulte o manual do Sicredi!
