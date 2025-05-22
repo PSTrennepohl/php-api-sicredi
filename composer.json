@@ -1,5 +1,5 @@
 {
-    "name": "PSTrennepohl/php-api-sicredi",
+    "name": "pstrennepohl/php-api-sicredi",
     "description": "Biblioteca para integração com a API Sicredi Geração de QR Code PIX + Geração de Boletos",
     "type": "library",
     "license": "MIT",
