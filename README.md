@@ -1,6 +1,7 @@
 # PHP API Sicredi
 Biblioteca para integração com a API Sicredi para a geração de QR Code PIX e Boletos.
 
+
 ## Instalação
 ```bash
 composer require pstrennepohl/php-api-sicredi
