@@ -4,11 +4,11 @@ Biblioteca para integração com a API Sicredi e geração de QR Code PIX.
 ## Instalação
 ```bash
 composer require pstrennepohl/php-api-sicredi
-
+```
 Exemplo de uso:
 
-**1. Gerando um PIX para pagamento**
-
+** 1. Gerando um PIX para pagamento **
+```bash
   <?php
     require_once "./vendor/autoload.php";
 
@@ -47,7 +47,7 @@ Exemplo de uso:
 
     echo '<br><br><img width="300" height="300" src="'.$qrcode.'" alt="QR Code" />';
   ?>
-
+```
 
 2. Verificando os dados do PIX gerado
   <?php
