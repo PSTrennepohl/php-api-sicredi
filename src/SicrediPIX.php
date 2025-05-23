@@ -82,7 +82,7 @@ class SicrediPIX{
         $this->parth  =  '/api/v2/webhook/' . $chave;
         $this->header =  ['Authorization: Bearer ' . $this->token . ''];
         $response     =  $this->Request("GET");
-        return $response;
+        return json_decode($response);
     }
 
     public function deleteUrlWebhook($chave){
@@ -97,7 +97,7 @@ class SicrediPIX{
         $this->parth  =  '/api/v2/cob';
         $this->header =  ['Content-Type: application/json', 'Authorization: Bearer ' . $this->token . ''];
         $response     =  $this->Request("POST");
-        return $response;
+        return json_decode($response);
     }
 
     /*
