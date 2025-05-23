@@ -2,7 +2,7 @@
 Biblioteca para integração com a API Sicredi e geração de QR Code PIX.
 
 ## Instalação
-bash
+```bash
 composer require pstrennepohl/php-api-sicredi
 
 Exemplo de uso:
@@ -49,8 +49,7 @@ Exemplo de uso:
   ?>
 
 
-**2. Verificando os dados do PIX gerado**
-
+2. Verificando os dados do PIX gerado
   <?php
     $ret = $pix->dadosDeCobranca('txid');
     echo $ret->calendario->criacao; // data de criação
@@ -74,11 +73,10 @@ Exemplo de uso:
   ?>
 
 
-**3. WEBHOOK Endereço utilizado para receber o status do PIX**
+3. WEBHOOK Endereço utilizado para receber o status do PIX
   Obs.: O WebHook é setado apenas uma vez, não a cada transação, pois ele registra que TODOS os retornos dessa ChaveDoCliente devem ser para este endereço(URL).
 
-**3.1 Verificando o endereço cadastrado**
-
+3.1 Verificando o endereço cadastrado
   <?php
     require_once "./vendor/autoload.php";
     use PSTrennepohl\Sicredi\SicrediPIX;
@@ -99,10 +97,9 @@ Exemplo de uso:
     }
   ?>
 
-
-**3.2 Cadastrando o endereço de retorno.**
+3.2 Cadastrando o endereço de retorno.
   Quando o pix é pago é acionado um evento que envia as informações para o endereço configurado, dessa forma consegue-se saber quando o PIX foi pago e dar baixa automatica internamente.
-
+  
 <?php 
   require_once "./vendor/autoload.php";
   use PSTrennepohl\Sicredi\SicrediPIX;
@@ -124,9 +121,7 @@ Exemplo de uso:
 ?>
 
 
-
-**4. Para uma lista completa de opções para a geração de boleto execute:**
-
+4. Para uma lista completa de opções para a geração de boleto execute:
 <?php
   require_once "./autoload.php";
   
@@ -136,5 +131,4 @@ Exemplo de uso:
   echo $sicredi->DadosBoleto->getVariaveis();
 ?>
 
-
-##Qualquer dúvida consulte o manual do Sicredi!
+Qualquer dúvida consulte o manual do Sicredi!
