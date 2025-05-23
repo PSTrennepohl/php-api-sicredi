@@ -1,5 +1,5 @@
 # PHP API Sicredi
-Biblioteca para integração com a API Sicredi e geração de QR Code PIX.
+Biblioteca para integração com a API Sicredi para a geração de QR Code PIX e Boletos.
 
 ## Instalação
 ```bash
