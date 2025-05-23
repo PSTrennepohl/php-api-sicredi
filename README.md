@@ -24,7 +24,12 @@ composer require pstrennepohl/php-api-sicredi
       "pass" => "senha se houver, não é obrigatória"
     ];
 
-    $pix = new SicrediPIX($initPix);
+    // precisa do try{}catch pois efetua testes de validade do certificado
+    try{
+        $pix = new SicrediPIX($initPix);
+    }catch(Exception $e){
+        echo htmlentities($e->getMessage());
+    }
 
     $cobranca  = [
         "calendario" => [
@@ -93,7 +98,12 @@ composer require pstrennepohl/php-api-sicredi
       "pass" => "senha se houver, não é obrigatória"
     ];
     
-    $pix = new SicrediPIX($initPix);
+    // precisa do try{}catch pois efetua testes de validade do certificado
+    try{
+        $pix = new SicrediPIX($initPix);
+    }catch(Exception $e){
+        echo htmlentities($e->getMessage());
+    }
     $WebHook = $pix->getUrlWebhook("ChaveDoCliente"); // Retorna um json
     foreach ($WebHook as $chave => $valor) {
         echo "<b>[".$chave."]</b>: ".$valor."<br>";
@@ -117,7 +127,12 @@ composer require pstrennepohl/php-api-sicredi
       "pass" => "senha se houver, não é obrigatória"
     ];
     
-    $pix = new SicrediPIX($initPix);
+    // precisa do try{}catch pois efetua testes de validade do certificado
+    try{
+        $pix = new SicrediPIX($initPix);
+    }catch(Exception $e){
+        echo htmlentities($e->getMessage());
+    }
     
     $url = 'https://endereco.com.br/do/retornoDoPix.php';
     $chave = "ChaveDoCliente", 

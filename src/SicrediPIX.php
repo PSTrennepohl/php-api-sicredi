@@ -21,6 +21,12 @@ class SicrediPIX{
 
     public function __construct($dados){
 
+        $resultadoCertificado = $this->VerificarCertificado($dados["crt_file"]);
+
+        if ($resultadoCertificado["valido"] === false) {
+            throw new \Exception($resultadoCertificado['mensagem']);
+        }
+        
         if ((int) $dados["producao"] == 1) {
             $this->url = self::urlP;
         } else {
@@ -131,6 +137,68 @@ class SicrediPIX{
 
     public function gerarQRCode(string $data): string {
         return (new QRCode)->render($data);
+    }
+
+    public function VerificarCertificado($cer){
+        $resposta = [
+            "valido" => false,
+            "mensagem" => "",
+            "expiracao" => null,
+        ];
+
+        // Tenta carregar o conteúdo do certificado
+        $conteudo = @file_get_contents($cer);
+        if ($conteudo === false || trim($conteudo) === "") {
+            $resposta["mensagem"] = "❌ Não foi possível ler o arquivo do certificado ou está vazio.";
+            return $resposta;
+        }
+
+        // Detectar se PEM ou DER (simplificado)
+        $isPEM = strpos($conteudo, '-----BEGIN CERTIFICATE-----') !== false;
+
+        if ($isPEM) {
+            // Tenta ler PEM
+            $cert = @openssl_x509_read($conteudo);
+            if (!$cert) {
+                $resposta["mensagem"] = "❌ Erro ao interpretar o certificado PEM (formato inválido).";
+                return $resposta;
+            }
+        } else {
+            // Tenta ler DER - abrir o conteúdo como DER
+            // PHP só suporta DER com parâmetro a partir do PHP 8:
+            if (defined('OPENSSL_FORMAT_DER')) {
+                $cert = @openssl_x509_read($conteudo, OPENSSL_FORMAT_DER);
+                if (!$cert) {
+                    $resposta["mensagem"] = "❌ Erro ao interpretar o certificado DER (formato inválido).";
+                    return $resposta;
+                }
+            } else {
+                // PHP versão < 8.0 não suporta ler DER direto, então converta fora do PHP
+                $resposta["mensagem"] = "❌ Certificado DER não suportado nesta versão do PHP. Converta para PEM.";
+                return $resposta;
+            }
+        }
+
+        // Parsea os dados do certificado
+        $cert_info = @openssl_x509_parse($cert);
+        if (!$cert_info || !isset($cert_info["validTo_time_t"])) {
+            $resposta["mensagem"] = "❌ Certificado lido, mas a data de expiração não foi encontrada.";
+            return $resposta;
+        }
+
+        // Extrai a data de expiração
+        $expiry_timestamp = $cert_info["validTo_time_t"];
+        $resposta["expiracao"] = date('Y-m-d', $expiry_timestamp);
+
+        // Verifica validade
+        if ($expiry_timestamp > time()) {
+            $resposta["valido"] = true;
+            $resposta["mensagem"] = "✅ Certificado válido até {$resposta['expiracao']}.";
+        } else {
+            $resposta["mensagem"] = "❌ Certificado expirado em {$resposta['expiracao']}.";
+        }
+
+        return $resposta;
     }
 }
 
