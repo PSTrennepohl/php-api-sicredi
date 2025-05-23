@@ -7,15 +7,15 @@ composer require pstrennepohl/php-api-sicredi
 
 Exemplo de uso:
 
-1. Gerando um PIX para pagamento
-
+**1. Gerando um PIX para pagamento**
+```
   <?php
     require_once "./vendor/autoload.php";
 
     use PSTrennepohl\Sicredi\SicrediPIX;
 
     $initPix  = [
-      "producao" => 1, // 0 | 1 
+      "producao" => 0, // 0[Homologação], 1[Producao]
       "client_id" => "IdDoClienteGeradoNaApiDoSicredi",
       "client_secret" => "SecretDoClienteGeradoNaApiDoSicredi",
       "crt_file" => "/Caminho/do/certificado.cer",
@@ -47,9 +47,10 @@ Exemplo de uso:
 
     echo '<br><br><img width="300" height="300" src="'.$qrcode.'" alt="QR Code" />';
   ?>
+```
 
-
-2. Verificando os dados do PIX gerado
+**2. Verificando os dados do PIX gerado**
+```
   <?php
     $ret = $pix->dadosDeCobranca('txid');
     echo $ret->calendario->criacao; // data de criação
@@ -71,18 +72,19 @@ Exemplo de uso:
     echo $ret->infoAdicionais[0]->valor; // valor do dado para controle interno
     echo $ret->pixCopiaECola; // código pix copia e cola
   ?>
+```
 
-
-3. WEBHOOK Endereço utilizado para receber o status do PIX
+**3. WEBHOOK Endereço utilizado para receber o status do PIX**
   Obs.: O WebHook é setado apenas uma vez, não a cada transação, pois ele registra que TODOS os retornos dessa ChaveDoCliente devem ser para este endereço(URL).
 
-3.1 Verificando o endereço cadastrado
+**3.1 Verificando o endereço cadastrado**
+```
   <?php
     require_once "./vendor/autoload.php";
     use PSTrennepohl\Sicredi\SicrediPIX;
 
       $initPix  = [
-      "producao" => 1, // 0 | 1 
+      "producao" => 0, // 0[Homologação], 1[Producao]
       "client_id" => "IdDoClienteGeradoNaApiDoSicredi",
       "client_secret" => "SecretDoClienteGeradoNaApiDoSicredi",
       "crt_file" => "/Caminho/do/certificado.cer",
@@ -96,10 +98,11 @@ Exemplo de uso:
         echo "<b>[".$chave."]</b>: ".$valor."<br>";
     }
   ?>
+```
 
-3.2 Cadastrando o endereço de retorno.
+**3.2 Cadastrando o endereço de retorno.**
   Quando o pix é pago é acionado um evento que envia as informações para o endereço configurado, dessa forma consegue-se saber quando o PIX foi pago e dar baixa automatica internamente.
-  
+```
 <?php 
   require_once "./vendor/autoload.php";
   use PSTrennepohl\Sicredi\SicrediPIX;
@@ -119,9 +122,11 @@ Exemplo de uso:
   $chave = "ChaveDoCliente", 
   $pix->updateWebhook($url, $chave);
 ?>
+```
 
 
-4. Para uma lista completa de opções para a geração de boleto execute:
+**4. Para uma lista completa de opções para a geração de boleto execute:**
+```
 <?php
   require_once "./autoload.php";
   
@@ -130,5 +135,6 @@ Exemplo de uso:
   $sicredi = new SicrediAPI($agencia,$cedente,$posto,$token,$api_key);
   echo $sicredi->DadosBoleto->getVariaveis();
 ?>
+```
 
-Qualquer dúvida consulte o manual do Sicredi!
+##Qualquer dúvida consulte o manual do Sicredi!
