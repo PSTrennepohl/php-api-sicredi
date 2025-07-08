@@ -146,6 +146,11 @@ class SicrediPIX{
             "expiracao" => null,
         ];
 
+        if(!$cer || empty(trim($cer))){
+            $resposta["mensagem"] = "❌ O arquivo do certificado digital está vazio.";
+            return $resposta;
+        }
+
         // Tenta carregar o conteúdo do certificado
         $conteudo = @file_get_contents($cer);
         if ($conteudo === false || trim($conteudo) === "") {
